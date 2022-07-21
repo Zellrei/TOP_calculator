@@ -1,5 +1,6 @@
 * {
-  border: 1px solid purple;
+  font-weight: bold;
+  /* border: 1px solid purple; */
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   text-align: center;
 }
@@ -37,6 +38,7 @@
 
 #top-row-container {
   display: grid;
+  width: 100%;
   background-color: lightgreen;
   grid-template-columns: auto auto;
 }
