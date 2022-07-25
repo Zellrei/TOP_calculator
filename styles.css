@@ -1,15 +1,13 @@
 * {
   font-weight: bold;
-  /* border: 1px solid purple; */
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   text-align: center;
 }
 
 .key {
-  display: flex;
+  display: grid;
   box-sizing: border-box;
-  border: 1px solid blue;
-  border-radius: 4px;
+  border: 1px solid #838f8f;
   padding: 10px;
   width: 70px;
   height: 70px;
@@ -22,25 +20,45 @@
   display: grid;
   grid-template-columns: auto;
   margin: auto;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: #838f8f;
+  width: fit-content;
 }
 
 #results-display {
   box-sizing: border-box;
+  border-radius: 5px;
   width: 100%;
   padding: 20px 20px 20px 20px ;
+  background-color: aliceblue;
+  grid-template-columns: auto;
+}
+
+#results-display:empty:after {
+  content: '\200b';
+} /* allows the screen to keep the same height even when empty */
+
+#top-separator {
+  padding: 10px 0;
 }
 
 #keys-container {
+  box-sizing: border-box;
   grid-template-columns: auto;
   display: grid;
   justify-content: center;
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 0;
 }
 
 #top-row-container {
+  box-sizing: border-box;
   display: grid;
   width: 100%;
-  background-color: lightgreen;
-  grid-template-columns: auto auto;
+  background-color: #7ffff9;
+  grid-template-columns: 50% 50%;
 }
 
 #top-row-container > .key {
@@ -50,16 +68,22 @@
 #central-container {
   display: grid;
   grid-template-columns: auto auto;
+  overflow: hidden;
 }
 
 #digits-container {
   display: grid;
   grid-template-columns: auto auto auto;
-  background-color: lightcoral;
+  background-color: rgb(194, 255, 235);
+  overflow: hidden;
 }
 
 #operators-container {
   display: grid;
-  flex-direction: column;
-  background-color: aquamarine;
+  background-color: #7fffd4;
+  overflow: hidden;
+}
+
+#equals {
+  background-color: aqua;
 }
