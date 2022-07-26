@@ -42,8 +42,8 @@ const keyAdd = document.getElementById("key-add");
 const keySubstract = document.getElementById("key-substract");
 const keyMultiply = document.getElementById("key-multiply");
 const keyDivide = document.getElementById("key-divide");
-const keyUndo = document.getElementById("key-0");
-const keyClear = document.getElementById("key-0");
+const keyUndo = document.getElementById("undo");
+const keyClear = document.getElementById("clear");
 
 const display = document.getElementById("results-display");
 display.textContent = strCurrent;
@@ -60,7 +60,11 @@ key8.addEventListener("click", function() {modifyStrCurrent('8');}, false);
 key9.addEventListener("click", function() {modifyStrCurrent('9');}, false);
 key0.addEventListener("click", function() {modifyStrCurrent('0');}, false);
 
+key1.addEventListener("click", function() {modifyStrCurrent('1');}, false);
 
+
+keyUndo.addEventListener("click", function() {undoStrCurrent();}, false);
+keyClear.addEventListener("click", function() {clearStrCurrent();}, false);
 
 // keyFloating.addEventListener("click", modifyStrCurrent('1'));
 // keyEquals.addEventListener("click", modifyStrCurrent('1'));
@@ -68,8 +72,42 @@ key0.addEventListener("click", function() {modifyStrCurrent('0');}, false);
 // keySubstract.addEventListener("click", modifyStrCurrent('1'));
 // keyMultiply.addEventListener("click", modifyStrCurrent('1'));
 
+//keyboard version :
+document.addEventListener('keydown', (event) => {
+  console.log(event.key);
+  switch (event.key) {
+    case "1": modifyStrCurrent('1'); break;
+    case "2": modifyStrCurrent('2'); break;
+    case "3": modifyStrCurrent('3'); break;
+    case "4": modifyStrCurrent('4'); break;
+    case "5": modifyStrCurrent('5'); break;
+    case "6": modifyStrCurrent('6'); break;
+    case "7": modifyStrCurrent('7'); break;
+    case "8": modifyStrCurrent('8'); break;
+    case "9": modifyStrCurrent('9'); break;
+    case "0": modifyStrCurrent('0'); break;
+    case "Backspace": undoStrCurrent(); break;
+    case "Delete":
+    case "Escape": clearStrCurrent(); break;
+
+  }
+});
+
+
+
+
 
 function modifyStrCurrent(keyPressed) {
-  strCurrent = strCurrent + keyPressed;
+  strCurrent += keyPressed;
+  display.textContent = strCurrent;
+}
+
+function clearStrCurrent() {
+  strCurrent = '';
+  display.textContent = strCurrent;
+}
+
+function undoStrCurrent() {
+  strCurrent = strCurrent.slice(0, -1);
   display.textContent = strCurrent;
 }
