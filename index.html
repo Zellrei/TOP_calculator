@@ -10,8 +10,15 @@
 <body>
   <div id="global-container">
 
-    <div id="results-display">&nbsp;</div>
-
+    <div id="display">
+      <div id="results-display">&nbsp;</div>
+      <div id="display-bottom-line">    
+        <div id="operator-display">&nbsp;</div>
+        <div id="current-display"></div>
+        
+      </div>
+    </div>
+    
     <div id="top-separator"></div>
 
     <div id="keys-container">
@@ -39,20 +46,22 @@
         <div id="operators-container">
           <div id="key-add" class="key operator">+</div>
           <div id="key-substract" class="key operator">-</div>
-          <div id="key-multiply" class="key operator">x</div>
-          <div id="key-divide" class="key operator">/</div>
+          <div id="key-multiply" class="key operator">&times;</div>
+          <div id="key-divide" class="key operator">&divide;</div>
         </div>
       </div>
 
     </div>
 
-      <div id="bottom-container">
-        
-        
+    <div id="bottom-container">
+      
+    </div>
 
-      </div>
   </div>
-  
+
+  <div id="debug">
+    <button id="debug-btn">Debug</button>
+  </div>
 
   <script type="text/javascript" src="script.js"></script>
 </body>

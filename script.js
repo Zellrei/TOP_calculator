@@ -1,27 +1,38 @@
 let strCurrent =  '';
+let topNum = '';
+let chosenOperator ='';
+let results = '';
 
 function operate (operator, num1, num2) {
   switch (operator) {
-    case "add": return calcAdd(num1, num2);
-    case "substract": return calcSubstract(num1, num2);
-    case "multiply": return calcMultiply(num1, num2);
-    case "divide": return calcDivide(num1, num2);
+    case "+": topNum = calcAdd(num1, num2); break;
+    case "-": topNum = calcSubstract(num1, num2); break;
+    case "x": topNum = calcMultiply(num1, num2); break;
+    case "÷": topNum = calcDivide(num1, num2); break;
+    case "" : topNum = strCurrent; strCurrent = ''; break;
   }
 
+  chosenOperator = '';
+  strCurrent = '';
+  resultsDisplay.textContent = topNum;
+  currentDisplay.textContent = strCurrent;
+  operatorDisplay.textContent = chosenOperator;
+  
   function calcAdd (a,b) {
-    return a + b;
+    return Number(a) + Number(b);
   }
   
   function calcSubstract (a,b) {
-    return a - b;
+    return Number(a) - Number(b);
   }
   
   function calcMultiply (a,b) {
-    return a * b;
+    return Number(a) * Number(b);
   }
   
   function calcDivide (a,b) {
-    return a / b;
+    if (b == '0') {clearCalc(); return '';} 
+    return Number(a) / Number(b)
   }
 }
 
@@ -44,8 +55,9 @@ const keyDivide = document.getElementById("key-divide");
 const keyUndo = document.getElementById("undo");
 const keyClear = document.getElementById("clear");
 
-const display = document.getElementById("results-display");
-display.textContent = strCurrent;
+const resultsDisplay = document.getElementById("results-display");
+const currentDisplay = document.getElementById("current-display");
+const operatorDisplay = document.getElementById("operator-display");
 
 
 key1.addEventListener("click", function() {modifyStrCurrent('1');}, false);
@@ -59,19 +71,21 @@ key8.addEventListener("click", function() {modifyStrCurrent('8');}, false);
 key9.addEventListener("click", function() {modifyStrCurrent('9');}, false);
 key0.addEventListener("click", function() {modifyStrCurrent('0');}, false);
 
+keyAdd.addEventListener("click", function() {chooseOperator("+");}, false);
+keySubstract.addEventListener("click", function() {chooseOperator("-");}, false);
+keyMultiply.addEventListener("click", function() {chooseOperator("x");}, false);
+keyDivide.addEventListener("click", function() {chooseOperator("÷");}, false);
+
+keyEquals.addEventListener("click", function() {operate(chosenOperator, topNum, strCurrent)}, false);
 
 keyUndo.addEventListener("click", function() {undoStrCurrent();}, false);
-keyClear.addEventListener("click", function() {clearStrCurrent();}, false);
+keyClear.addEventListener("click", function() {clearCalc();}, false);
 
 // keyFloating.addEventListener("click", modifyStrCurrent('1'));
-// keyEquals.addEventListener("click", modifyStrCurrent('1'));
-// keyAdd.addEventListener("click", modifyStrCurrent('1'));
-// keySubstract.addEventListener("click", modifyStrCurrent('1'));
-// keyMultiply.addEventListener("click", modifyStrCurrent('1'));
 
 //keyboard version :
 document.addEventListener('keydown', (event) => {
-  console.log(event.key);
+  
   switch (event.key) {
     case "1": modifyStrCurrent('1'); break;
     case "2": modifyStrCurrent('2'); break;
@@ -85,27 +99,67 @@ document.addEventListener('keydown', (event) => {
     case "0": modifyStrCurrent('0'); break;
     case "Backspace": undoStrCurrent(); break;
     case "Delete":
-    case "Escape": clearStrCurrent(); break;
-    //case "Enter" : TODO break;
-    //case float et operators
+    case "Escape": clearCalc(); break;
+    case "+" : chooseOperator("+"); break;
+    case "-" : chooseOperator("-"); break;
+    case "*" : chooseOperator("x"); break;
+    case "/" : chooseOperator("÷"); break;
+    case "Enter" : operate(chosenOperator, topNum, strCurrent); break;
+
+    //case "." :
+    //case "," : float;
   }
 });
 
 
-
-
-
 function modifyStrCurrent(keyPressed) {
   strCurrent += keyPressed;
-  display.textContent = strCurrent;
+  currentDisplay.textContent = strCurrent;
 }
 
-function clearStrCurrent() {
+function chooseOperator(keyPressed) {
+  if (strCurrent === '' && topNum === '') return;
+
+  if (topNum !== '' && chosenOperator === '') {
+    chosenOperator = keyPressed;
+    operatorDisplay.textContent = chosenOperator;
+  } else if (topNum !== '' && chosenOperator !== '') {
+    operate(chosenOperator, topNum, strCurrent);
+    chosenOperator = keyPressed;
+    operatorDisplay.textContent = chosenOperator;
+  } else {
+    topNum = strCurrent;
+    resultsDisplay.textContent = topNum;
+    strCurrent = ''; 
+    currentDisplay.textContent = strCurrent;
+    chosenOperator = keyPressed;
+    operatorDisplay.textContent = chosenOperator;
+  } 
+}
+
+function clearCalc() {
+  results = '';
   strCurrent = '';
-  display.textContent = strCurrent;
+  chosenOperator = '';
+  topNum = '';
+  resultsDisplay.textContent = '';
+  currentDisplay.textContent = '';
+  operatorDisplay.textContent = '';
 }
 
 function undoStrCurrent() {
   strCurrent = strCurrent.slice(0, -1);
-  display.textContent = strCurrent;
+  currentDisplay.textContent = strCurrent;
 }
+
+const debugBtn = document.getElementById('debug-btn');
+
+function debugValues() {
+  console.log(`strCurrent : ${strCurrent}`);
+  console.log(`topNum : ${topNum}`);
+  console.log(`chosenOperator : ${chosenOperator}`);
+  console.log(`results : ${results}`);
+  console.log("----------------");
+} 
+
+debugBtn.addEventListener("click", () => debugValues());
