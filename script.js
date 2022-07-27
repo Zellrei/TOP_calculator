@@ -1,6 +1,5 @@
 let strCurrent =  '';
 
-
 function operate (operator, num1, num2) {
   switch (operator) {
     case "add": return calcAdd(num1, num2);
@@ -60,8 +59,6 @@ key8.addEventListener("click", function() {modifyStrCurrent('8');}, false);
 key9.addEventListener("click", function() {modifyStrCurrent('9');}, false);
 key0.addEventListener("click", function() {modifyStrCurrent('0');}, false);
 
-key1.addEventListener("click", function() {modifyStrCurrent('1');}, false);
-
 
 keyUndo.addEventListener("click", function() {undoStrCurrent();}, false);
 keyClear.addEventListener("click", function() {clearStrCurrent();}, false);
@@ -89,7 +86,8 @@ document.addEventListener('keydown', (event) => {
     case "Backspace": undoStrCurrent(); break;
     case "Delete":
     case "Escape": clearStrCurrent(); break;
-
+    //case "Enter" : TODO break;
+    //case float et operators
   }
 });
 
