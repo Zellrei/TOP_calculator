@@ -14,7 +14,7 @@ function operate (operator, num1, num2) {
 
   chosenOperator = '';
   strCurrent = '';
-  resultsDisplay.textContent = topNum;
+  resultsDisplay.textContent = Math.round((topNum + Number.EPSILON) * 100) / 100;
   currentDisplay.textContent = strCurrent;
   operatorDisplay.textContent = chosenOperator;
   
@@ -31,7 +31,11 @@ function operate (operator, num1, num2) {
   }
   
   function calcDivide (a,b) {
-    if (b == '0') {clearCalc(); return '';} 
+    if (b == '0') {
+      alert("Phew ! Almost blew everything up !")
+      clearCalc(); 
+      return '';
+    } 
     return Number(a) / Number(b)
   }
 }
@@ -46,7 +50,7 @@ const key7 = document.getElementById("key-7");
 const key8 = document.getElementById("key-8");
 const key9 = document.getElementById("key-9");
 const key0 = document.getElementById("key-0");
-const keyFloating = document.getElementById("floating");
+const keyFloat = document.getElementById("floating");
 const keyEquals = document.getElementById("equals");
 const keyAdd = document.getElementById("key-add");
 const keySubstract = document.getElementById("key-substract");
@@ -70,18 +74,15 @@ key7.addEventListener("click", function() {modifyStrCurrent('7');}, false);
 key8.addEventListener("click", function() {modifyStrCurrent('8');}, false);
 key9.addEventListener("click", function() {modifyStrCurrent('9');}, false);
 key0.addEventListener("click", function() {modifyStrCurrent('0');}, false);
-
+keyFloat.addEventListener("click", function() {modifyStrCurrent('.');}, false);
 keyAdd.addEventListener("click", function() {chooseOperator("+");}, false);
 keySubstract.addEventListener("click", function() {chooseOperator("-");}, false);
 keyMultiply.addEventListener("click", function() {chooseOperator("x");}, false);
 keyDivide.addEventListener("click", function() {chooseOperator("÷");}, false);
-
 keyEquals.addEventListener("click", function() {operate(chosenOperator, topNum, strCurrent)}, false);
 
 keyUndo.addEventListener("click", function() {undoStrCurrent();}, false);
 keyClear.addEventListener("click", function() {clearCalc();}, false);
-
-// keyFloating.addEventListener("click", modifyStrCurrent('1'));
 
 //keyboard version :
 document.addEventListener('keydown', (event) => {
@@ -97,6 +98,8 @@ document.addEventListener('keydown', (event) => {
     case "8": modifyStrCurrent('8'); break;
     case "9": modifyStrCurrent('9'); break;
     case "0": modifyStrCurrent('0'); break;
+    case "." :
+    case "," : modifyStrCurrent('.'); break;
     case "Backspace": undoStrCurrent(); break;
     case "Delete":
     case "Escape": clearCalc(); break;
@@ -105,14 +108,15 @@ document.addEventListener('keydown', (event) => {
     case "*" : chooseOperator("x"); break;
     case "/" : chooseOperator("÷"); break;
     case "Enter" : operate(chosenOperator, topNum, strCurrent); break;
-
-    //case "." :
-    //case "," : float;
   }
 });
 
-
 function modifyStrCurrent(keyPressed) {
+  if (topNum && !chosenOperator) clearCalc();
+  
+  if ((keyPressed == '.') && (strCurrent.indexOf('.') != '-1')) {
+    return;
+  }
   strCurrent += keyPressed;
   currentDisplay.textContent = strCurrent;
 }
@@ -152,7 +156,7 @@ function undoStrCurrent() {
   currentDisplay.textContent = strCurrent;
 }
 
-const debugBtn = document.getElementById('debug-btn');
+/* const debugBtn = document.getElementById('debug-btn');
 
 function debugValues() {
   console.log(`strCurrent : ${strCurrent}`);
@@ -162,4 +166,4 @@ function debugValues() {
   console.log("----------------");
 } 
 
-debugBtn.addEventListener("click", () => debugValues());
+debugBtn.addEventListener("click", () => debugValues()); */
