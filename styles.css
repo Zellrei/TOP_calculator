@@ -41,11 +41,12 @@
 #display {
   display: grid;
   box-sizing: border-box;
-  border-radius: 5px;
+  border-radius: 2px;
   width: 100%;
   padding: 15px 20px 15px 20px ;
   background-color: aliceblue;
   grid-template-rows: auto auto;
+  border: 1px solid #838f8f;
 }
 
 #display-top-line {
